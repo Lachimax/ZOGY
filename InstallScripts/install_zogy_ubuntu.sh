@@ -16,9 +16,9 @@
 # ================================================================================
 
 # python version
-v_python="3.7"
+#v_python="3.7"
 # zogy; for latest version, leave these empty ("") or comment out
-v_zogy="0.8"
+#v_zogy="0.8"
 
 # define home of zogy
 zogyhome=${PWD}/ZOGY
@@ -69,13 +69,13 @@ then
     zogy_branch="--branch v${v_zogy}"
     v_zogy_git="@v${v_zogy}"
 fi
-git clone ${zogy_branch} https://github.com/pmvreeswijk/ZOGY
+git clone ${zogy_branch} https://github.com/Lachimax/ZOGY
 
 
 # install ZOGY repository
 # ================================================================================
 
-sudo -H ${pip} install git+git://github.com/pmvreeswijk/ZOGY${v_zogy_git}
+sudo -H ${pip} install git+git://github.com/Lachimax/ZOGY${v_zogy_git}
 
 
 # download calibration catalog
