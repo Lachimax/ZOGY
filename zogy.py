@@ -217,13 +217,13 @@ def optimal_subtraction(new_fits=None, ref_fits=None,
     if new:
         # read in header of new_fits
         t = time.time()
-        header_new = read_hdulist(new_fits, get_data=False, get_header=True)
+        header_new = read_hdulist(new_fits, get_data=False, get_header=True, ext_name_indices=0)
         ysize_new, xsize_new, gain_new, readnoise_new, satlevel_new, ra_new, dec_new, pixscale_new = (
             read_header(header_new, keywords, log))
 
     if ref:
         # read in header of ref_fits
-        header_ref = read_hdulist(ref_fits, get_data=False, get_header=True)
+        header_ref = read_hdulist(ref_fits, get_data=False, get_header=True, ext_name_indices=0)
         ysize_ref, xsize_ref, gain_ref, readnoise_ref, satlevel_ref, ra_ref, dec_ref, pixscale_ref = (
             read_header(header_ref, keywords, log))
 
@@ -2903,6 +2903,7 @@ def clipped_stats(array, nsigma=3, max_iters=10, epsilon=1e-6, clip_upper_frac=0
 ################################################################################
 
 def read_header(header, keywords, log):
+    print('read_header', list(header.keys()))
     # list with values to return
     values = []
     # loop keywords
@@ -2922,6 +2923,8 @@ def read_header(header, keywords, log):
 ################################################################################
 
 def get_keyvalue(key, header, log):
+    print('get_keyvalue', list(header.keys()))
+
     # check if [key] is defined in Constants module
     var = 'C.' + key
     try:
@@ -4414,6 +4417,7 @@ def get_psf(image, header, nsubs, imtype, fwhm, pixscale, log):
     # If the PSFEx output file is already present with the same
     # [psf_size_config] as currently required, then skip [run_psfex].
     skip_psfex = False
+    print('skip_psfex', skip_psfex)
     psfex_bintable = base + '_psf.fits'
     if os.path.isfile(psfex_bintable) and not get_par(C.redo, tel):
         data, header_psf = read_hdulist(psfex_bintable, get_header=True)
@@ -4498,7 +4502,7 @@ def get_psf(image, header, nsubs, imtype, fwhm, pixscale, log):
     # If not already done so above, read in PSF output binary table
     # from psfex, containing the polynomial coefficient images
     if not ('header_psf' in dir()):
-        data, header_psf = read_hdulist(psfex_bintable, get_header=True)
+        data, header_psf = read_hdulist(psfex_bintable, get_header=True, ext_name_indices=0)
         data = data[0][0][:]
 
     # read in some header keyword values
@@ -5612,8 +5616,8 @@ def run_remap(image_new, image_ref, image_out, image_out_size,
     if get_par(C.timing, tel): t = time.time()
     log.info('Executing run_remap ...')
 
-    header_new = read_hdulist(image_new, get_data=False, get_header=True)
-    header_ref = read_hdulist(image_ref, get_data=False, get_header=True)
+    header_new = read_hdulist(image_new, get_data=False, get_header=True, ext_name_indices=0)
+    header_ref = read_hdulist(image_ref, get_data=False, get_header=True, ext_name_indices=0)
 
     # create .head file with header info from [image_new]
     header_out = header_new[:]
@@ -5665,7 +5669,7 @@ def run_remap(image_new, image_ref, image_out, image_out_size,
     if run_alt:
         image_resample = image_out.replace('_remap.fits', resample_suffix)
         data_resample, header_resample = read_hdulist(image_resample,
-                                                      get_header=True)
+                                                      get_header=True, ext_name_indices=0)
         # SWarp turns integers (mask images) into floats, so making
         # sure that [data_resample] is in the correct format.  All the
         # inputs are fits image names, so have to include an
