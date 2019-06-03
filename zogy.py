@@ -2923,7 +2923,6 @@ def read_header(header, keywords, log):
 ################################################################################
 
 def get_keyvalue(key, header, log):
-    print('get_keyvalue', list(header.keys()))
 
     # check if [key] is defined in Constants module
     var = 'C.' + key
@@ -4502,7 +4501,7 @@ def get_psf(image, header, nsubs, imtype, fwhm, pixscale, log):
     # If not already done so above, read in PSF output binary table
     # from psfex, containing the polynomial coefficient images
     if not ('header_psf' in dir()):
-        data, header_psf = read_hdulist(psfex_bintable, get_header=True, ext_name_indices=0)
+        data, header_psf = read_hdulist(psfex_bintable, get_header=True)
         data = data[0][0][:]
 
     # read in some header keyword values

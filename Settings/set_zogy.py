@@ -12,7 +12,7 @@ import os
 # be performed on images with size [subimage_size]+2xsubimage_border,
 # where only the central [subimage_size] pixels will be used for the
 # full output image
-subimage_size = 960  # size of subimages
+subimage_size = 160  # size of subimages
 subimage_border = 32  # border around subimage to avoid edge effects
 
 # ZOGY parameters
