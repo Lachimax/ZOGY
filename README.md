@@ -1,4 +1,7 @@
 # ZOGY
+
+THIS FORK IS INCOMPLETE AND LIKELY UNSTABLE.
+
 a Python implementation of proper image subtraction (Zackay, Ofek &amp; Gal-Yam 2016, ApJ, 830, 27)
 
 Written by Paul Vreeswijk with vital input from Barak Zackay and Eran Ofek. Adapted by Kerry Paterson for integration into pipeline for MeerLICHT.
