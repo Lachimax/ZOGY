@@ -68,7 +68,7 @@ __version__ = '0.8.6'
 def optimal_subtraction(new_fits=None, ref_fits=None,
                         new_fits_mask=None, ref_fits_mask=None,
                         set_file='Settings.set_zogy', log=None,
-                        verbose=None, nthread=1, telescope='ML1'):
+                        verbose=None, nthread=1, telescope='VLT'):
     """Function that accepts a new and a reference fits image, finds their
     WCS solution using Astrometry.net, runs SExtractor (inside
     Astrometry.net), PSFex to extract the PSF from the images, and
@@ -2903,7 +2903,7 @@ def clipped_stats(array, nsigma=3, max_iters=10, epsilon=1e-6, clip_upper_frac=0
 ################################################################################
 
 def read_header(header, keywords, log):
-    print('read_header', list(header.keys()))
+    print('read_header', list(keywords))
     # list with values to return
     values = []
     # loop keywords
@@ -3258,8 +3258,7 @@ def prep_optimal_subtraction(input_fits, nsubs, imtype, fwhm, header, log,
         lat = get_par(C.obs_lat, tel)
         lon = get_par(C.obs_lon, tel)
         height = get_par(C.obs_height, tel)
-        airmass_sex = get_airmass(ra_sex, dec_sex, obsdate,
-                                  lat, lon, height, log=log)
+        airmass_sex = get_airmass(input_fits, log=log)
         airmass_sex_median = float(np.median(airmass_sex))
         log.info('median airmass: {}'.format(airmass_sex_median))
 
@@ -3273,8 +3272,7 @@ def prep_optimal_subtraction(input_fits, nsubs, imtype, fwhm, header, log,
                               'DEC (ICRS) at image center (astrometry.net)')
 
         # determine airmass at image center
-        airmass_center = get_airmass(ra_center, dec_center, obsdate,
-                                     lat, lon, height, log=log)
+        airmass_center = get_airmass(input_fits, log=log)
         header['AIRMASSC'] = (float(airmass_center), 'airmass at image center')
 
         # determine image zeropoint if ML/BG calibration catalog exists
@@ -3960,16 +3958,13 @@ def get_zone_indices(dec_center, fov_half_deg, zone_size=60):
 
 ################################################################################
 
-def get_airmass(ra, dec, obsdate, lat, lon, height, log=None):
+def get_airmass(hdu, log):
     if log is not None:
         log.info('Executing get_airmass ...')
 
-    location = EarthLocation(lat=lat, lon=lon, height=height)
-    coords = SkyCoord(ra, dec, frame='icrs', unit='deg')
-    coords_altaz = coords.transform_to(AltAz(obstime=Time(obsdate), location=location))
+    airmass = hdu[0].header['AIRMASS']
 
-    return coords_altaz.secz
-
+    return airmass
 
 ################################################################################
 

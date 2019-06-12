@@ -21,6 +21,6 @@ directory = '/home/lachlan/ZOGY/data/'
 # file.close()
 
 zogy.optimal_subtraction(
-    new_fits=directory + 'FRB-181112--Host-FORS2.2018-12-03T02:00:57.814_SCIENCE_REDUCED_IMG_trim.fits',
-    ref_fits=directory + 'FRB-181112--Host-FORS2.2018-12-03T02:10:12.158_SCIENCE_REDUCED_IMG_trim.fits',
+    new_fits=directory + 'g_1.fits',
+    ref_fits=directory + 'g_2.fits',
     telescope='VLT')

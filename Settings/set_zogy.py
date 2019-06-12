@@ -65,18 +65,17 @@ bkg_npasses = 1  # number of background iterations
 key_naxis1 = 'NAXIS1'
 key_naxis2 = 'NAXIS2'
 key_gain = 'GAIN'
-gain = 1.0
+gain = 0.8
 key_ron = 'RDNOISE'
 ron = 2.7
 key_satlevel = 'SATURATE'
 satlevel = 65535
 key_ra = 'RA'
 key_dec = 'DEC'
-# key_pixscale = 'PIXSCALE'
+key_pixscale = 'PIXSCALE'
 pixscale = 0.2519
 key_exptime = 'EXPTIME'
 key_filter = 'FILTER'
-filter = 'g_HIGH'
 key_obsdate = 'DATE-OBS'
 
 # ===============================================================================
